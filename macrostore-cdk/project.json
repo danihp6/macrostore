@@ -1,0 +1,56 @@
+{
+  "name": "macrostore-cdk",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "macrostore-cdk/src",
+  "prefix": "macrostore",
+  "targets": {
+    "synth": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cdk synth -o ../cdk.out"
+        ],
+        "cwd": "macrostore-cdk"
+      }
+    },
+    "bootstrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cdk bootstrap -o ../cdk.out"
+        ],
+        "cwd": "macrostore-cdk"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cdk deploy --all --require-approval never -c env={args.env} -o ../cdk.out"
+        ],
+        "cwd": "macrostore-cdk"
+      }
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cdk destroy --all --force -o ../cdk.out"
+        ],
+        "cwd": "macrostore-cdk"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "macrostore-cdk/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
