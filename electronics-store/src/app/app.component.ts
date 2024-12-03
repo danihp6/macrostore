@@ -7,6 +7,4 @@ import { RouterModule } from '@angular/router';
   selector: 'app-root',
   template: '<router-outlet><router-outlet>'
 })
-export class AppComponent {
-  title = 'electronics-store';
-}
+export class AppComponent {}
