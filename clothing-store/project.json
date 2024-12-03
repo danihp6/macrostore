@@ -15,15 +15,24 @@
         "main": "clothing-store/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "clothing-store/tsconfig.app.json",
-        "inlineStyleLanguage": "sass",
+        "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
             "input": "clothing-store/public"
           }
         ],
-        "styles": ["clothing-store/src/styles.sass"],
-        "scripts": []
+        "styles": [
+          "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+          "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+          "clothing-store/src/styles.scss"
+        ],
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "clothing-store/src/app/styles"
+          ]
+        }
       },
       "configurations": {
         "production": {
