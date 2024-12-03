@@ -1,9 +1,9 @@
 name: Test
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - feature/*
 
 permissions:
   actions: read
@@ -38,8 +38,8 @@ jobs:
           role-skip-session-tagging: true
           aws-region: ${{ env.AWS_REGION }}
       - uses: nrwl/nx-set-shas@v4
-      # - run: nx-cloud record -- nx format:check --base main
-      - run: nx affected -t test --base main
+      # - run: nx-cloud record -- nx format:check
+      - run: nx affected -t test
 
   lint:
     name: 🐞 Lint
@@ -54,8 +54,8 @@ jobs:
       - run: npm ci
       - run: npm i -g nx@19.8.6
       - uses: nrwl/nx-set-shas@v4
-      # - run: nx-cloud record -- nx format:check --base main
-      - run: nx affected -t lint --base main
+      # - run: nx-cloud record -- nx format:check
+      - run: nx affected -t lint
 
   build:
     name: 🔨 Build
@@ -75,5 +75,5 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - run: npm i -g nx@19.8.6
       - uses: nrwl/nx-set-shas@v4
-      # - run: nx-cloud record -- nx format:check --base main
-      - run: nx affected -t build synth --base main
+      # - run: nx-cloud record -- nx format:check
+      - run: nx affected -t build synth
