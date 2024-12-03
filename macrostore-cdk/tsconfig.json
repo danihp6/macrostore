@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "module": "commonjs",
+    "outDir": "../dist/out-tsc",
+    "types": ["node", "jest"]
   },
   "files": [],
   "include": [],

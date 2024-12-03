@@ -1,0 +1,76 @@
+name: Test
+
+on: push
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+
+env:
+  RED:                   '\033[1;91m'
+  GREEN:                 '\033[1;92m'
+  BLUE:                  '\033[1;94m'
+  NC:                    '\033[0m'
+  AWS_REGION:            ${{ vars.AWS_REGION }}
+  AWS_ACCOUNT:           ${{ vars.AWS_ACCOUNT }}
+
+jobs:
+
+  unit-test:
+    name: 🐞 Unit test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm i -g nx@19.8.6
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/github
+          role-skip-session-tagging: true
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: nrwl/nx-set-shas@v4
+      # - run: nx-cloud record -- nx format:check --base main
+      - run: nx affected -t test --base main
+
+  lint:
+    name: 🐞 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm i -g nx@19.8.6
+      - uses: nrwl/nx-set-shas@v4
+      # - run: nx-cloud record -- nx format:check --base main
+      - run: nx affected -t lint --base main
+
+  build:
+    name: 🔨 Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/github
+          role-skip-session-tagging: true
+          aws-region: ${{ env.AWS_REGION }}
+      - run: npm i -g nx@19.8.6
+      - uses: nrwl/nx-set-shas@v4
+      # - run: nx-cloud record -- nx format:check --base main
+      - run: nx affected -t build synth --base main

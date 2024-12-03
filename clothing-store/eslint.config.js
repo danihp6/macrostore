@@ -23,12 +23,14 @@ module.exports = [
           prefix: 'app',
           style: 'kebab-case',
         },
-      ],
+      ]
     },
   },
   {
     files: ['**/*.html'],
     // Override or add rules here
-    rules: {},
+    rules: {
+      '@typescript-eslint/ban-ts-comment': 'off'
+    },
   },
 ];
