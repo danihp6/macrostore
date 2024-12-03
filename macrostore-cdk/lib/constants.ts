@@ -1,3 +1,5 @@
 export const Constants = {
-  appName: 'macrostore'
+  appName: 'macrostore',
+  // DynamoDB
+  productsTableName: 'products'
 };
