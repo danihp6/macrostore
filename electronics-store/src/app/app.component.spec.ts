@@ -8,4 +8,8 @@ describe('AppComponent', () => {
       imports: [AppComponent, RouterModule.forRoot([])],
     }).compileComponents();
   });
+
+  it('init', () => {
+    expect(true).toBe(true);
+  });
 });
