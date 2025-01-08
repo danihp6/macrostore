@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Product } from '../../core/models/Product';
+import { ProductsService } from '../../core/services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  products = [
-    {
-      id: 'test',
-      name: 'Blue T-Shirt',
-      price: 100,
-      src: 'images/blue-t-shirt.webp'
-    }
-  ];
+  products: Product[] = [];
   adds = [
     {
       id: '0',
@@ -36,4 +31,10 @@ export class HomeComponent {
     autoWidth: true,
     items: 1,
   };
+
+  constructor(private productsService: ProductsService) {
+    this.productsService.getProducts('clothing').subscribe(products => {
+      this.products = products;
+    });
+  }
 }

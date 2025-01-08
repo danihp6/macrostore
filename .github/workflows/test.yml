@@ -17,6 +17,7 @@ env:
   NC:                    '\033[0m'
   AWS_REGION:            ${{ vars.AWS_REGION }}
   AWS_ACCOUNT:           ${{ vars.AWS_ACCOUNT }}
+  NX_NO_CLOUD:           true
 
 jobs:
 
