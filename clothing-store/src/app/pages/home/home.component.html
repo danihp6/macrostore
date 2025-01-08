@@ -22,7 +22,7 @@
   </div>
   <div class="home__products">
     <div class="home__products__item" *ngFor="let product of products">
-      <img class="home__products__item__image" [src]="product.src" alt="product" />
+      <img class="home__products__item__image" [src]="product.image" alt="product" />
       <div class="home__products__item__info">
         <div class="home__products__item__info__name">{{ product.name }}</div>
         <div class="home__products__item__info__price">${{ product.price }}</div>
