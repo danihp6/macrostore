@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../macrostore-lib/src/lib/services/products.service.ts", "../macrostore-lib/src/environment.ts", "../macrostore-lib/src/lib/models/Product.ts"],
   "compilerOptions": {},
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }
