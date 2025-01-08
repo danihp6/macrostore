@@ -21,6 +21,7 @@ env:
   GREEN:                 '\033[1;92m'
   BLUE:                  '\033[1;94m'
   NC:                    '\033[0m'
+  NX_NO_CLOUD:           true
 
 jobs:
   release:
