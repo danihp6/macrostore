@@ -1,0 +1,59 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        type: choice
+        description: Deploy environment
+        required: true
+        options:
+          - dev
+
+env:
+  ENV:                   ${{ github.event.inputs.env }}
+  GH_TOKEN:              ${{ github.token }}
+  RELEASE_VERSION:       ${{ github.ref_name }}
+  REF_TYPE:              ${{ github.ref_type }}
+  AWS_REGION:            ${{ vars.AWS_REGION }}
+  AWS_ACCOUNT:           ${{ vars.AWS_ACCOUNT }}
+  RED:                   '\033[1;91m'
+  GREEN:                 '\033[1;92m'
+  BLUE:                  '\033[1;94m'
+  NC:                    '\033[0m'
+  NX_NO_CLOUD:           true
+
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+
+jobs:
+  setup:
+    name: 🚀 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Exit if is not a release
+        if: env.REF_TYPE != 'tag'
+        run: |
+          echo -e "${{ env.RED }}[Error] ${{ env.NC }}You must select a tag not a branch"
+          exit 1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: |
+          npm i -g nx@19.8.6
+      - run: npm ci
+      - run: |
+          gh release download ${{ env.RELEASE_VERSION }}
+          unzip dist.zip
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/github
+          role-skip-session-tagging: true
+          aws-region: ${{ env.AWS_REGION }}
+      - run: |
+          nx run-many --target bootstrap
+          nx run-many --target deploy --args="--env=${{ env.ENV }}" --verbose
