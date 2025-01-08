@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release version'
+        required: true
+
+permissions:
+  actions: read
+  packages: write
+  contents: write
+
+env:
+  GITHUB_TOKEN:          ${{ github.token }}
+  GH_TOKEN:              ${{ github.token }}
+  RELEASE_VERSION:       ${{ github.event.inputs.release }}
+  REF_TYPE:              ${{ github.ref_type }}
+  RED:                   '\033[1;91m'
+  GREEN:                 '\033[1;92m'
+  BLUE:                  '\033[1;94m'
+  NC:                    '\033[0m'
+
+jobs:
+  release:
+    name: 🏷 Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Exit if is not a release
+        if: env.REF_TYPE != 'branch'
+        run: |
+          echo -e "${{ env.RED }}[Error] ${{ env.NC }}You must select a branch not a tag"
+          exit 1
+      - run: npm i -g nx@19.8.6
+      - run: npm ci
+      - run: nx run-many --target build
+      - run: zip -r dist.zip ./dist
+      - name: 🏷 Create tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ env.RELEASE_VERSION }}',
+              sha: context.sha
+            })
+      - name: 🏷 Create release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          draft: false
+          prerelease: false
+      - name: ⬆️  Upload dist
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist.zip
+          asset_name: dist.zip
+          asset_content_type: application/zip
