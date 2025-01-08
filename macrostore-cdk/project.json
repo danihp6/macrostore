@@ -12,7 +12,13 @@
           "cdk synth -o ../cdk.out"
         ],
         "cwd": "macrostore-cdk"
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": ["clothing-store", "electronics-store"]
+        }
+      ]
     },
     "bootstrap": {
       "executor": "nx:run-commands",
