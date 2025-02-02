@@ -1,14 +1,15 @@
 <div class="home">
-  <div class="home__navbar">
-    <a class="home__navbar__item" href="">Home</a>
-    <a class="home__navbar__item" href="">Shop</a>
-    <a class="home__navbar__item" href="">About</a>
-    <a class="home__navbar__item" href="">Contact</a>
-    <div style="width: 100%;"></div>
-    <div class="home__navbar__item">
-      <img class="home__navbar__item__logo" src="icons/purchase.svg" alt="purchase" />
-    </div>
-  </div>
+  <mat-toolbar class="home__navbar" color="primary">
+    <span class="home__navbar__title">Clothing Store</span>
+    <button mat-button class="home__navbar__button" routerLink="/all" routerLinkActive="home__navbar__active">All</button>
+    <button mat-button class="home__navbar__button" routerLink="/women" routerLinkActive="home__navbar__active">Women</button>
+    <button mat-button class="home__navbar__button" routerLink="/men" routerLinkActive="home__navbar__active">Men</button>
+    <button mat-button class="home__navbar__button" routerLink="/kids" routerLinkActive="home__navbar__active">Kids</button>
+    <span class="home__navbar__spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </mat-toolbar>
   <div class="home__adds">
     <owl-carousel-o [options]="customOptions">
       <ng-container *ngFor="let add of adds">
@@ -20,13 +21,17 @@
       </ng-container>
     </owl-carousel-o>
   </div>
-  <div class="home__products">
-    <div class="home__products__item" *ngFor="let product of products">
-      <img class="home__products__item__image" [src]="product.image" alt="product" />
-      <div class="home__products__item__info">
-        <div class="home__products__item__info__name">{{ product.name }}</div>
-        <div class="home__products__item__info__price">${{ product.price }}</div>
-      </div>
-    </div>
-  </div>
+  <mat-grid-list cols="4" rowHeight="400px">
+    @for (product of products; track product) {
+      <mat-grid-tile>
+        <div class="home__products__item">
+          <img class="home__products__item__image" [src]="product.image" alt="product" />
+          <div class="home__products__item__info">
+            <div class="home__products__item__info__name">{{ product.name }}</div>
+            <div class="home__products__item__info__price">${{ product.price }}</div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    }
+  </mat-grid-list>
 </div>

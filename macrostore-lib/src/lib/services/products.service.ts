@@ -12,8 +12,9 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(department: string) {
-    return this.http.get<{products: Product[]}>(`${this.baseUrl}/products/${department}`).pipe(
+  getProducts(department: string, filter: { [key: string]: any } = {}) {
+    const query = Object.entries(filter).map(([key, value]) => `${key}=${value}`).join('&');
+    return this.http.get<{products: Product[]}>(`${this.baseUrl}/products/${department}?${query}`).pipe(
       map(response => response.products)
     );
   }
