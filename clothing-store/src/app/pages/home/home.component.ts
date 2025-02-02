@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Product } from 'macrostore-lib';
 import { ProductsService } from 'macrostore-lib';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,10 +32,14 @@ export class HomeComponent {
     autoWidth: true,
     items: 1,
   };
+  category = '';
 
-  constructor(private productsService: ProductsService) {
-    this.productsService.getProducts('clothing').subscribe(products => {
-      this.products = products;
+  constructor(private productsService: ProductsService, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.category = params['category'] === 'all' ? '' : params['category'];
+      this.productsService.getProducts('clothing', this.category ? { category: this.category } : {}).subscribe(products => {
+        this.products = products;
+      });
     });
   }
 }
