@@ -1,0 +1,46 @@
+.shopping-cart {
+  &__modal {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    background-color: rgb(172, 172, 244);
+    width: 200px;
+    max-height: 400px;
+
+    &__empty {
+      padding: 20px;
+      text-align: center;
+    }
+
+    &__products {
+      overflow: auto;
+      height: calc(100% - 68px);
+    }
+
+    &__product {
+      display: flex;
+      padding: 20px;
+      justify-content: space-between;
+      cursor: pointer;
+
+      &__name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+      }
+    }
+
+    &__total {
+      display: flex;
+      padding: 20px;
+      justify-content: space-between;
+      &__label {
+
+      }
+
+      &__value {
+
+      }
+    }
+  }
+}
