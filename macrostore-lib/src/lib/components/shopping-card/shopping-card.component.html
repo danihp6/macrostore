@@ -10,9 +10,12 @@
   <ng-container *ngIf="products.length > 0">
     <div class="shopping-cart__modal__products">
       @for (product of products; track product) {
-        <div class="shopping-cart__modal__product" (click)="deleteProduct(product)">
+        <div class="shopping-cart__modal__product">
           <div class="shopping-cart__modal__product__name">{{ product.name }}</div>
           <div class="shopping-cart__modal__product__price">${{ product.price }}</div>
+          <button mat-icon-button (click)="deleteProduct(product)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
       }
     </div>
