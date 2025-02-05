@@ -1,0 +1,1 @@
+export { ShoppingCardComponent } from './shopping-card/shopping-card.component';

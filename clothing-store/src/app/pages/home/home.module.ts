@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ShoppingCardComponent } from "macrostore-lib";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -18,11 +19,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CommonModule,
     CarouselModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: HomeComponent
-      }
-    ])
-  ]
+        {
+            path: '',
+            component: HomeComponent
+        }
+    ]),
+    ShoppingCardComponent
+]
 })
 export class HomeModule { }

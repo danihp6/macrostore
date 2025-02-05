@@ -1,0 +1,27 @@
+<button mat-icon-button (click)="opened = !opened" [matBadge]="products.length" matBadgeColor="warn" matBadgeOverlap="false">
+  <mat-icon>shopping_cart</mat-icon>
+</button>
+<div *ngIf="opened" class="shopping-cart__modal">
+  <ng-container *ngIf="products.length === 0">
+    <div class="shopping-cart__modal__empty">
+      Empty cart
+    </div>
+  </ng-container>
+  <ng-container *ngIf="products.length > 0">
+    <div class="shopping-cart__modal__products">
+      @for (product of products; track product) {
+        <div class="shopping-cart__modal__product">
+          <div class="shopping-cart__modal__product__name">{{ product.name }}</div>
+          <div class="shopping-cart__modal__product__price">${{ product.price }}</div>
+          <button mat-icon-button (click)="deleteProduct(product)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+    <div class="shopping-cart__modal__total">
+      <div class="shopping-cart__modal__total__label">Total</div>
+      <div class="shopping-cart__modal__total__value">${{ total() }}</div>
+    </div>
+  </ng-container>
+</div>
