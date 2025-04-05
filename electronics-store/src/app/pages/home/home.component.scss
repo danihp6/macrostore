@@ -62,17 +62,21 @@
       &__image {
         height: 200px;
         object-fit: contain;
+        margin-right: 20px
       }
 
       &__info {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
+        margin-right: 20px;
+
         &__name {
           font-size: 20px;
           font-weight: bold;
           text-transform: capitalize;
         }
+
         &__price {
           font-size: 20px;
           color: black;
